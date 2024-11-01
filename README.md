@@ -39,8 +39,8 @@
 
 ###
 
-<br clear="both">
-
-<img src="https://raw.githubusercontent.com/PatchNote0/PatchNote0/output/snake.svg" alt="Snake animation" />
+<div align="center">
+  <img height="200" src="https://s8.uupload.ir/files/انواع-فرش-ایرانی-min.jpg_9wxt.png"  />
+</div>
 
 ###
