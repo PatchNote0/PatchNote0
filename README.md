@@ -38,9 +38,3 @@
 </div>
 
 ###
-
-<div align="center">
-  <img height="200" src="https://s8.uupload.ir/files/انواع-فرش-ایرانی-min.jpg_9wxt.png"  />
-</div>
-
-###
