@@ -1,0 +1,52 @@
+name: Redraw the sequencer
+
+# Redraws assets/sequencer.gif from the public contribution calendar,
+# once a day and whenever the drawing code changes.
+on:
+  schedule:
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "art/**"
+      - ".github/workflows/sequencer.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sequencer
+  cancel-in-progress: true
+
+jobs:
+  draw:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Pillow
+        run: python -m pip install --quiet "pillow>=11,<13"
+
+      - name: Draw
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_LOGIN: ${{ github.repository_owner }}
+        run: python art/sequencer.py
+
+      - name: Commit the new drawing
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/sequencer.*
+          if git diff --cached --quiet; then
+            echo "Nothing changed."
+          else
+            git commit -m "Redraw the sequencer"
+            git push
+          fi
