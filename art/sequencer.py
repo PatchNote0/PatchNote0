@@ -10,9 +10,12 @@ A GitHub Action runs this every day (.github/workflows/sequencer.yml).
     python art/sequencer.py --offline       # draw from assets/sequencer.json
     python art/sequencer.py --demo          # draw made-up data, for testing only
 
-Data comes from the public calendar at github.com/users/<login>/contributions,
-with the GraphQL API as a fallback when a token is present. If both fail the
-last good data is kept, and with no data at all the panel says it is waiting.
+Data comes from the GraphQL API when SEQUENCER_TOKEN holds the owner's own
+token, which also works when the profile is private. Otherwise it comes from
+the public calendar at github.com/users/<login>/contributions, with GraphQL
+through GITHUB_TOKEN as a fallback. If every source fails, or a year that had
+activity suddenly comes back empty (what a private profile shows to others),
+the last good data is kept. With no data at all the panel says it is waiting.
 """
 from __future__ import annotations
 
@@ -127,21 +130,40 @@ def demo_data():
     return {"days": days, "total": sum(x["count"] for x in days), "source": "demo"}
 
 
+def is_blank(data):
+    return not any(d.get("level") or d.get("count") for d in data["days"])
+
+
+def read_cache():
+    if os.path.exists(CACHE):
+        with open(CACHE) as fh:
+            return json.load(fh)
+    return None
+
+
 def load(mode, login):
     if mode == "demo":
         return demo_data()
+    cached = read_cache()
     if mode == "fetch":
         errors = []
-        try:
-            data = fetch_html(login)
-        except Exception as e:  # network, markup change
-            errors.append(f"html: {e}")
-            data = None
-        if data is None and os.environ.get("GITHUB_TOKEN"):
+        sources = []
+        if os.environ.get("SEQUENCER_TOKEN"):
+            sources.append(("graphql (owner token)", lambda: fetch_graphql(login, os.environ["SEQUENCER_TOKEN"])))
+        sources.append(("html", lambda: fetch_html(login)))
+        if os.environ.get("GITHUB_TOKEN"):
+            sources.append(("graphql", lambda: fetch_graphql(login, os.environ["GITHUB_TOKEN"])))
+        data = None
+        for name, fetch in sources:
             try:
-                data = fetch_graphql(login, os.environ["GITHUB_TOKEN"])
-            except Exception as e:
-                errors.append(f"graphql: {e}")
+                data = fetch()
+                break
+            except Exception as e:  # network, markup change, missing access
+                errors.append(f"{name}: {e}")
+        if data is not None and is_blank(data) and cached and not is_blank(cached):
+            errors.append("the calendar came back empty while the last one had activity; "
+                          "a private profile looks like this without SEQUENCER_TOKEN")
+            data = None
         if data is not None:
             data["login"] = login
             data["fetched"] = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d")
@@ -149,10 +171,7 @@ def load(mode, login):
                 json.dump(data, fh, indent=1)
             return data
         print("could not fetch the calendar; keeping the last good drawing", *errors, sep="\n  ")
-    if os.path.exists(CACHE):
-        with open(CACHE) as fh:
-            return json.load(fh)
-    return None
+    return cached
 
 
 # -----------------------------------------------------------------------------

@@ -43,6 +43,9 @@ jobs:
       - name: Draw
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Optional: the owner's own token keeps the calendar live when the
+          # profile is private. Without it the last good drawing is kept.
+          SEQUENCER_TOKEN: ${{ secrets.SEQUENCER_TOKEN }}
           GH_LOGIN: ${{ github.repository_owner }}
         run: python art/sequencer.py
 
