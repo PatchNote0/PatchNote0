@@ -43,7 +43,10 @@ This is client and community work, so none of it lives in public repositories on
 
 ## Tools
 
-HTML, CSS, JavaScript, Node.js, Python, C++, C#, Discord.js, Git and Figma.
+<picture>
+  <source media="(max-width: 600px)" srcset="./assets/tools-compact.png">
+  <img src="./assets/tools.png" width="1680" alt="Pixel-art logos of the tools I work with. Languages: C, C++, C#, Rust, Python, JavaScript and TypeScript. Web, stack and tools: HTML, CSS, Node.js, Discord.js, SQL, Git and Figma.">
+</picture>
 
 ## This year, as a sequence
 
