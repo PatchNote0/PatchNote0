@@ -125,6 +125,7 @@ PLATES = [
     ("budget", "alu", "BUDGET FLOW", None, False),
     ("shora", "bone", "SHORA ARCHIVE", "شورا", False),
     ("patchnote", "crimson", "PATCHNOTE", None, True),
+    ("seam", "black", "SEAM", None, False),
 ]
 PLATE_H = 17
 

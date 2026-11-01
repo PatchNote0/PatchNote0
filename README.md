@@ -15,9 +15,15 @@ My work moves between engineering, visual design and writing, and keeps returnin
 
 ## Patch notes, November 2026
 
+- **Released.** [SEAM 0.1.0](https://github.com/PatchNote0/SEAM/releases/tag/v0.1.0), an open-source tool for Windows, macOS and Linux.
 - **Renamed.** Barnameh Negar is now Dastyar Moshaver, دستیار مشاور.
 - **New.** This profile, rebuilt as a modular synth with one module for each project.
 - **Known issue.** The public demo of Shora Archive reports that its server is unavailable.
+
+## Open source
+
+<a href="https://github.com/PatchNote0/SEAM"><img src="./assets/plate-seam.png" width="90" alt="SEAM"></a><br>
+Finds where the parts of a system meet, such as a TypeScript client and a FastAPI service, and proves each connection from the source code, field by field. A command-line tool for Windows, macOS and Linux, in English and Persian.
 
 ## Selected work
 
