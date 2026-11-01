@@ -2,13 +2,13 @@ name: Redraw the sequencer
 
 # Redraws the contribution sequencer once a day and whenever the drawing code
 # changes. The pictures are published to the `output` branch, so the daily
-# redraw never adds commits to main.
+# redraw never adds commits to the default branch.
 on:
   schedule:
     - cron: "17 3 * * *"
   workflow_dispatch:
   push:
-    branches: [profile]
+    branches: [main, profile]
     paths:
       - "art/**"
       - ".github/workflows/sequencer.yml"
