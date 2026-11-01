@@ -1,8 +1,8 @@
 """The tools I work with, as a patch bay: one small pixel logo for each.
 
 Every logo is drawn by hand on the same 17 x 17 grid, in the rack's colour
-ramps, and lit from the top left like the rest of the rack. Languages sit in
-the first row, then the web, the stack and the tools.
+ramps, and lit from the top left like the rest of the rack. Languages fill
+the first row; the web and the tools fill the second.
 
     python art/tools.py   ->  assets/tools.png and assets/tools-compact.png
 """
@@ -29,6 +29,7 @@ RAMP = {
     "blue": ("#9cbcff", "#3f72d9", "#22428c"),
     "steel": ("#c9d6ea", "#8ea3c8", "#5d7096"),
     "violet": ("#c9a6f2", "#8b55d6", "#56308f"),
+    "lavender": ("#c3c6f5", "#7c80c8", "#4d5196"),
     "blurple": ("#a9b0ff", "#5a64e6", "#363c9e"),
     "amber": ("#ffd88a", "#f2a224", "#a9620c"),
     "yellow": ("#fff0a3", "#f0cf38", "#b09018"),
@@ -233,23 +234,69 @@ def figma():
     return [(tl, "crimson"), (tr, "coral"), (ml, "violet"), (mr, "cyan"), (bl, "green")], []
 
 
+def php():
+    """The PHP oval with its name across it."""
+    oval = {(x, y) for y in range(N) for x in range(N) if ((x - 8) / 8.45) ** 2 + ((y - 8) / 5.45) ** 2 <= 1}
+    return [(oval, "lavender")], [(word(SMALL, "PHP", 2, 6), "#1d1c22")]
+
+
+JAVA_CUP = [
+    ".................",
+    ".................",
+    ".................",
+    ".................",
+    ".................",
+    ".................",
+    ".................",
+    ".................",
+    "..###########....",
+    "..##############.",
+    "...#########..##.",
+    "...#########..##.",
+    "....############.",
+    ".....#######.....",
+    ".................",
+    ".#############...",
+    "..###########....",
+]
+JAVA_STEAM = [
+    "........#........",
+    ".......#...#.....",
+    "......#...#......",
+    "......#...#......",
+    ".......#...#.....",
+    "........#...#....",
+    ".......#...#.....",
+]
+
+
+def java():
+    """A cup on its saucer with two wisps of steam."""
+    cup = sprite(JAVA_CUP)
+    cup -= {(13, 10), (14, 10), (13, 11), (14, 11)}
+    return [(cup, "blue"), (sprite(JAVA_STEAM), "orange")], []
+
+
 TOOLS = [
-    # (label, logo) in reading order: languages first, then web, stack and tools
+    # Reading order: languages in the first row, the web and the tools in the second.
     [("C", lambda: c_family("", "steel")),
      ("C++", lambda: c_family("++", "blue")),
      ("C#", lambda: c_family("#", "violet")),
+     ("JAVA", java),
      ("RUST", rust),
      ("PYTHON", python),
-     ("JAVASCRIPT", js),
-     ("TYPESCRIPT", ts)],
+     ("PHP", php),
+     ("SQL", sql)],
     [("HTML", html),
      ("CSS", css),
+     ("JAVASCRIPT", js),
+     ("TYPESCRIPT", ts),
      ("NODE.JS", node),
      ("DISCORD.JS", discord_js),
-     ("SQL", sql),
      ("GIT", git),
      ("FIGMA", figma)],
 ]
+COLUMNS = len(TOOLS[0])
 
 LABEL_FONT = dict(SMALL, **SHARP)
 
@@ -285,9 +332,9 @@ def panel(w, h):
 
 
 def wide():
-    """Two rows of seven, each logo over its name. 420 wide, like the rack."""
-    w, margin, top = rack.W, 14, 9
-    cell = (w - 2 * margin) // 7
+    """Two rows of eight, each logo over its name. 420 wide, like the rack."""
+    w, margin, top = rack.W, 10, 9
+    cell = (w - 2 * margin) // COLUMNS
     row_h = N + 4 + 5
     gap = 10
     h = top + 2 * row_h + gap + top - 1
@@ -306,7 +353,7 @@ def compact():
     w, margin, top = 176, 8, 9
     col = (w - 2 * margin) // 2
     pitch = N + 6
-    h = top + 7 * pitch - 6 + top
+    h = top + COLUMNS * pitch - 6 + top
     cv = panel(w, h)
     for c, row in enumerate(TOOLS):
         x = margin + c * col + 4
