@@ -1,3 +1,5 @@
+<p align="right"><a href="./README.fa.md">فارسی</a></p>
+
 <picture>
   <source media="(max-width: 600px) and (prefers-reduced-motion: reduce)" srcset="./assets/rack-compact.png">
   <source media="(max-width: 600px)" srcset="./assets/rack-compact.gif">
