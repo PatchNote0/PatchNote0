@@ -7,16 +7,12 @@
 
 # Mani / PatchNote
 
-I build useful software, shape interfaces and care about the details that make a product feel complete. My work moves between engineering, visual design and writing, and keeps returning to music, photography, books, mathematics, physics and space.
-
-نرم‌افزار، رابط کاربری و سیستم‌های بصری
-
-[patchnote.top](https://patchnote.top/)
+I build useful software, shape interfaces and care about the details that make a product feel complete. My work moves between engineering, visual design and writing, and keeps returning to music, photography, books, mathematics, physics and space. The rest lives at [patchnote.top](https://patchnote.top/).
 
 ## Patch notes, November 2026
 
 - **Renamed.** Barnameh Negar is now Dastyar Moshaver, دستیار مشاور.
-- **New.** This profile. It is a modular synth drawn in pixels by a Python script, and every project on it is a module.
+- **New.** This profile: a modular synth drawn in pixels by a Python script, with one module for each project.
 - **Known issue.** The public demo of Shora Archive reports that its server is unavailable.
 
 ## Selected work
