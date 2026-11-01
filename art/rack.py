@@ -29,9 +29,9 @@ FRAME_MS = 90
 
 FINISH = {
     "ink": dict(base="#22325a", light="#30467a", dark="#17223f", print="#ebe5d6", dim="#9eacca"),
-    "alu": dict(base="#c4c7cc", light="#e3e5e8", dark="#9a9ea5", print="#1f2126", dim="#585c63"),
-    "crimson": dict(base="#b11f39", light="#cf3a52", dark="#82162a", print="#f7f0e5", dim="#f3c2c9"),
-    "bone": dict(base="#e3dbca", light="#f3ede1", dark="#c3b9a3", print="#2a2520", dim="#6f665a"),
+    "alu": dict(base="#c4c7cc", light="#e3e5e8", dark="#9a9ea5", print="#1f2126", dim="#4e5258"),
+    "crimson": dict(base="#b11f39", light="#cf3a52", dark="#82162a", print="#f7f0e5", dim="#f5ccd2"),
+    "bone": dict(base="#e3dbca", light="#f3ede1", dark="#c3b9a3", print="#2a2520", dim="#665e53"),
     "black": dict(base="#1d1c22", light="#2b2a32", dark="#121116", print="#ebe5d6", dim="#6c6a76"),
 }
 

@@ -9,7 +9,9 @@
 
 # Mani / PatchNote
 
-I build useful software, shape interfaces and care about the details that make a product feel complete. My work moves between engineering, visual design and writing, and keeps returning to music, photography, books, mathematics, physics and space. The rest lives at [patchnote.top](https://patchnote.top/).
+I build software, interfaces and visual systems, and I care about the details that make a product feel complete.
+
+My work moves between engineering, visual design and writing, and keeps returning to music, photography, books, mathematics, physics and space. The rest lives at [patchnote.top](https://patchnote.top/).
 
 ## Patch notes, November 2026
 
@@ -63,7 +65,7 @@ Each pad is one day of my public GitHub contributions, brighter on busier days. 
 Every picture here is pixel art drawn by code in [`art/`](./art), with Python and Pillow. There are no image editors, no stats services and no third-party cards.
 
 - [`art/rack.py`](./art/rack.py) draws the synth. The Dastyar Moshaver module is a study week read from right to left with Saturday at the top. Each lit block is a note: the PatchNote voice draws it on its scope, Budget Flow meters it and Shora Archive records it. The A4 output, the printed plan, is patched into the archive.
-- [`art/sequencer.py`](./art/sequencer.py) draws the year above from GitHub's public contribution calendar, and [the workflow](./.github/workflows/sequencer.yml) runs it every day.
+- [`art/sequencer.py`](./art/sequencer.py) draws the year above from GitHub’s public contribution calendar, and [the workflow](./.github/workflows/sequencer.yml) runs it every day.
 - [`art/fonts.py`](./art/fonts.py) holds the hand-drawn bitmap fonts. Persian is set in [Vazirmatn](https://github.com/rastikerdar/vazirmatn) and snapped to whole pixels.
 
 To draw everything again:
@@ -80,4 +82,4 @@ python art/rack.py && python art/extras.py && python art/sequencer.py
 <p align="center">
   <img src="./assets/wordmark.png" width="544" alt="PatchNote">
 </p>
-<p align="center">Made with intention. Refined one detail at a time.</p>
+<p align="center">Made with intention. Refined one detail at a&nbsp;time.</p>
