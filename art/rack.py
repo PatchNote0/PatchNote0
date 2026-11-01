@@ -255,7 +255,7 @@ def voice_dynamic(cv, frame, gate):
         if sy <= y < sy + sh:
             cv.put(x, y, trace)
     gx, gy = JACKS["voice.gate"]
-    px.led(cv, gx + 11, JACK_LABEL_Y + 1, gate, "#ffd166", "#5e1222",
+    px.led(cv, gx + 7, JACK_Y + 3, gate, "#ffd166", "#5e1222",
            glow=mix(FINISH["crimson"]["base"], "#ffd166", 0.4))
 
 
@@ -465,23 +465,41 @@ def render_frames_for_still():
     return {STILL_FRAME: frame_image(base, STILL_FRAME)}
 
 
+# The phone gets its own composition rather than the whole rack squeezed into
+# 340 pixels: the study week and the voice, whole, with the cables running on
+# past the right edge to the rest of the rack.
+COMPACT = (20, 0, 250, H)
+
+
+def save_gif(frames, path, box=None):
+    if box:
+        frames = [f.crop(box) for f in frames]
+    pal = to_palette(frames)
+    w, h = frames[0].size
+    big = [p.resize((w * SCALE, h * SCALE), Image.NEAREST) for p in pal]
+    big[0].save(path, save_all=True, append_images=big[1:],
+                duration=FRAME_MS, loop=0, optimize=False, disposal=1)
+
+
+def save_still(frame, path, box=None):
+    if box:
+        frame = frame.crop(box)
+    frame.resize((frame.width * SCALE, frame.height * SCALE), Image.NEAREST).save(path, optimize=True)
+
+
 def render(out_dir, still_frame=STILL_FRAME):
     base = static_layer()
     total = STEPS * FRAMES_PER_STEP
     frames = [frame_image(base, k) for k in range(total)]
-    pal = to_palette(frames)
-    big = [p.resize((W * SCALE, H * SCALE), Image.NEAREST) for p in pal]
     os.makedirs(out_dir, exist_ok=True)
-    big[0].save(
-        os.path.join(out_dir, "rack.gif"), save_all=True, append_images=big[1:],
-        duration=FRAME_MS, loop=0, optimize=False, disposal=1,
-    )
-    frames[still_frame].resize((W * SCALE, H * SCALE), Image.NEAREST).save(
-        os.path.join(out_dir, "rack.png"), optimize=True)
+    save_gif(frames, os.path.join(out_dir, "rack.gif"))
+    save_still(frames[still_frame], os.path.join(out_dir, "rack.png"))
+    save_gif(frames, os.path.join(out_dir, "rack-compact.gif"), COMPACT)
+    save_still(frames[still_frame], os.path.join(out_dir, "rack-compact.png"), COMPACT)
     return frames
 
 
 if __name__ == "__main__":
     root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     render(os.path.join(root, "assets"))
-    print("wrote assets/rack.gif and assets/rack.png")
+    print("wrote assets/rack.gif, rack.png and their compact versions")

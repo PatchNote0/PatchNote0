@@ -1,5 +1,7 @@
 <a href="https://patchnote.top/">
   <picture>
+    <source media="(max-width: 600px) and (prefers-reduced-motion: reduce)" srcset="./assets/rack-compact.png">
+    <source media="(max-width: 600px)" srcset="./assets/rack-compact.gif">
     <source media="(prefers-reduced-motion: reduce)" srcset="./assets/rack.png">
     <img src="./assets/rack.gif" width="1680" alt="A pixel-art modular synthesizer with four modules, one for each project. Dastyar Moshaver is a step sequencer laid out as a Persian study week, the crimson PatchNote voice draws its notes on an amber oscilloscope, Budget Flow has three faders named plan, alloc and left, and Shora Archive shows 1405 on a red display. Patch cables carry the signal from left to right.">
   </picture>
@@ -17,16 +19,16 @@ I build useful software, shape interfaces and care about the details that make a
 
 ## Selected work
 
-**[Dastyar Moshaver](https://patchnote.top/barnameh-negar.html)**<br>
+<a href="https://patchnote.top/barnameh-negar.html"><img src="./assets/plate-dastyar.png" width="342" alt="Dastyar Moshaver"></a><br>
 A study planner for Windows and macOS. It works out study blocks, builds the weekly plan and prints it as an A4 sheet or a PDF. Everything stays on your own computer.
 
-**[Budget Flow](https://patchnote.top/budgetflow-pn/bf-index.html)**<br>
+<a href="https://patchnote.top/budgetflow-pn/bf-index.html"><img src="./assets/plate-budget.png" width="150" alt="Budget Flow"></a><br>
 A planning workspace for budgets, purchase goals, guests, checklists, product references, polls and notes.
 
-**[Shora Archive](https://patchnote.top/shora/)**<br>
+<a href="https://patchnote.top/shora/"><img src="./assets/plate-shora.png" width="228" alt="Shora Archive"></a><br>
 The correspondence book of a student council: every letter registered, indexed and searchable.
 
-**[PatchNote](https://patchnote.top/)**<br>
+<a href="https://patchnote.top/"><img src="./assets/plate-patchnote.png" width="188" alt="PatchNote"></a><br>
 My own corner of the web, for development, interface experiments, visual work and writing.
 
 ## Experience
@@ -46,8 +48,10 @@ HTML, CSS, JavaScript, Node.js, Python, C++, C#, Discord.js, Git and Figma.
 ## This year, as a sequence
 
 <picture>
+  <source media="(max-width: 600px) and (prefers-reduced-motion: reduce)" srcset="./assets/sequencer-compact.png">
+  <source media="(max-width: 600px)" srcset="./assets/sequencer-compact.gif">
   <source media="(prefers-reduced-motion: reduce)" srcset="./assets/sequencer.png">
-  <img src="./assets/sequencer.gif" width="1680" alt="My GitHub contributions for the past year as a grid of 53 weeks by 7 days, drawn as the pads of a step sequencer. Busier days glow brighter amber, and a playhead walks through the year.">
+  <img src="./assets/sequencer.gif" width="1680" alt="My public GitHub contributions drawn as the pads of a step sequencer: one pad per day, weeks in columns, brighter amber on busier days, with a playhead walking through the weeks.">
 </picture>
 
 Each pad is one day of my public GitHub contributions, brighter on busier days. A GitHub Action reads the calendar and redraws this every day.

@@ -1,6 +1,6 @@
-"""The smaller pieces: a pixel avatar, the footer wordmark and a share board.
+"""The smaller pieces: nameplates, a pixel avatar, the footer wordmark and a share board.
 
-    python art/extras.py   ->  assets/pixel-avatar.png, assets/wordmark.png, assets/share-board.png
+    python art/extras.py   ->  assets/plate-*.png, pixel-avatar.png, wordmark.png, share-board.png
 """
 from __future__ import annotations
 
@@ -119,9 +119,48 @@ def share_board():
     out.save(os.path.join(ASSETS, "share-board.png"), optimize=True)
 
 
+PLATES = [
+    # file, finish, English name, Persian name, use the wordmark face
+    ("dastyar", "ink", "DASTYAR MOSHAVER", "دستیار مشاور", False),
+    ("budget", "alu", "BUDGET FLOW", None, False),
+    ("shora", "bone", "SHORA ARCHIVE", "شورا", False),
+    ("patchnote", "crimson", "PATCHNOTE", None, True),
+]
+PLATE_H = 17
+
+
+def nameplate(slug, finish, name, name_fa, wordmark_face):
+    """A strip cut from the module's own panel: its finish, two screws and its name
+    in the same lettering it carries in the rack."""
+    f = rack.FINISH[finish]
+    pad = 13
+    tw = px.text_width(name, WORDMARK if wordmark_face else px.SMALL)
+    fa_w = px.fa_mask(name_fa, 11, 600)[0].width if name_fa else 0
+    inner = tw + (10 + fa_w if name_fa else 0)
+    w = inner + 2 * pad
+    cv = Canvas(w, PLATE_H, f["base"])
+    cv.hline(0, 0, w, f["light"])
+    cv.vline(0, 0, PLATE_H, f["light"])
+    cv.hline(0, PLATE_H - 1, w, f["dark"])
+    cv.vline(w - 1, 0, PLATE_H, f["dark"])
+    px.screw(cv, 3, (PLATE_H - 5) // 2, "d")
+    px.screw(cv, w - 8, (PLATE_H - 5) // 2, "h")
+    if wordmark_face:
+        cv.text(pad, 4, name, f["print"], font=WORDMARK)
+    else:
+        cv.text(pad, 6, name, f["print"])
+    if name_fa:
+        mask, _ = px.fa_mask(name_fa, 11, 600)
+        cv.fa_text(w - pad, (PLATE_H - mask.height) // 2, name_fa, f["print"], size=11, weight=600, align="right")
+    cv.scaled(4).save(os.path.join(ASSETS, f"plate-{slug}.png"), optimize=True)
+    return w
+
+
 if __name__ == "__main__":
     os.makedirs(ASSETS, exist_ok=True)
+    for plate in PLATES:
+        nameplate(*plate)
     avatar()
     wordmark()
     share_board()
-    print("wrote assets/pixel-avatar.png, assets/wordmark.png, assets/share-board.png")
+    print("wrote the nameplates, pixel-avatar.png, wordmark.png and share-board.png")

@@ -36,7 +36,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ASSETS = os.path.join(ROOT, "assets")
 CACHE = os.path.join(ASSETS, "sequencer.json")
 
-W, H = 420, 100
+H = 100
 SCALE = 4
 FRAME_MS = 80
 
@@ -51,7 +51,7 @@ PAD = {
 }
 FLASH = ("#ffffff", "#ffffff", "#ffe2b0")
 PITCH, PAD_SIZE = 7, 6
-GRID_X, GRID_Y = 26, 30
+GRID_Y = 30
 
 
 # -----------------------------------------------------------------------------
@@ -159,7 +159,7 @@ def load(mode, login):
 # drawing
 # -----------------------------------------------------------------------------
 
-def weeks_of(days):
+def weeks_of(days, weeks):
     """Group days into GitHub's columns: weeks that start on Sunday."""
     cols = []
     for d in days:
@@ -168,37 +168,60 @@ def weeks_of(days):
         if not cols or row == 0:
             cols.append([None] * 7)
         cols[-1][row] = dict(d, row=row, date_obj=date)
-    return cols[-53:]
+    return cols[-weeks:]
 
 
-def panel(cv):
-    cv.rect(0, 0, W, H, PANEL["base"])
-    cv.hline(0, 0, W, PANEL["light"])
+class Sheet:
+    """One layout of the panel: the whole year, or the last weeks for a phone."""
+
+    def __init__(self, name, weeks, w, subtitle, legend):
+        self.name, self.weeks, self.w, self.subtitle, self.legend = name, weeks, w, subtitle, legend
+        self.h = H
+        grid_w = weeks * PITCH - 1
+        self.gx = (w - grid_w) // 2 + 3  # a little room on the left for M, W, F
+        self.gy = GRID_Y
+        self.right = self.gx + grid_w
+
+
+SHEETS = [
+    Sheet("sequencer", 53, 420, "ONE YEAR OF GITHUB CONTRIBUTIONS", legend=True),
+    Sheet("sequencer-compact", 20, 176, "LAST 20 WEEKS", legend=False),
+]
+
+
+def panel(cv, sh):
+    w = sh.w
+    cv.rect(0, 0, w, H, PANEL["base"])
+    cv.hline(0, 0, w, PANEL["light"])
     cv.vline(0, 0, H, PANEL["light"])
-    cv.hline(0, H - 1, W, PANEL["dark"])
-    cv.vline(W - 1, 0, H, PANEL["dark"])
-    for (x, y, s) in ((4, 3, "d"), (W - 9, 3, "h"), (4, H - 8, "v"), (W - 9, H - 8, "d")):
+    cv.hline(0, H - 1, w, PANEL["dark"])
+    cv.vline(w - 1, 0, H, PANEL["dark"])
+    for (x, y, s) in ((4, 3, "d"), (w - 9, 3, "h"), (4, H - 8, "v"), (w - 9, H - 8, "d")):
         px.screw(cv, x, y, s)
 
 
-def draw_static(cv, data):
-    panel(cv)
-    _, w = cv.text(GRID_X, 9, "P/N CLOCK", PANEL["print"])
-    cv.text(GRID_X + w + 8, 9, "ONE YEAR OF GITHUB CONTRIBUTIONS", PANEL["dim"])
+def draw_static(cv, sh, data):
+    panel(cv, sh)
+    _, w = cv.text(sh.gx, 9, "P/N CLOCK", PANEL["print"])
+    cv.text(sh.gx + w + 8, 9, sh.subtitle, PANEL["dim"])
     if not data:
-        for c in range(53):
+        for c in range(sh.weeks):
             for r in range(7):
-                pad(cv, c, r, 0)
+                pad(cv, sh, c, r, 0)
         msg = "WAITING FOR THE FIRST DAILY RUN"
         tw = px.text_width(msg)
-        cv.rect(W // 2 - tw // 2 - 8, GRID_Y + 3 * PITCH - 4, tw + 16, PITCH + 6, PANEL["base"])
-        cv.text(W // 2, GRID_Y + 3 * PITCH, msg, PANEL["print"], align="center")
+        mid = (sh.gx + sh.right) // 2
+        cv.rect(mid - tw // 2 - 8, sh.gy + 3 * PITCH - 4, tw + 16, PITCH + 6, PANEL["base"])
+        cv.text(mid, sh.gy + 3 * PITCH, msg, PANEL["print"], align="center")
         return []
-    cols = weeks_of(data["days"])
+    cols = weeks_of(data["days"], sh.weeks)
     lit = sum(1 for col in cols for d in col if d and d["level"] > 0)
     count = sum(1 for col in cols for d in col if d)
-    right = f"{lit} OF {count} DAYS LIT"
-    cv.text(W - GRID_X, 9, right, PANEL["print"], align="right")
+    ly = sh.gy + 7 * PITCH + 6
+    if sh.legend:
+        cv.text(sh.right, 9, f"{lit} OF {count} DAYS LIT", PANEL["print"], align="right")
+    else:  # the narrow sheet has room for the count only
+        cv.text(sh.gx, ly + 1, f"{lit} DAYS LIT", PANEL["print"])
     # month names above the first full week of each month
     last = None
     for c, col in enumerate(cols):
@@ -208,27 +231,23 @@ def draw_static(cv, data):
         m = first["date_obj"].month
         if m != last and first["date_obj"].day <= 7:
             name = first["date_obj"].strftime("%b").upper()
-            x = GRID_X + c * PITCH
-            if x + px.text_width(name) < W - GRID_X:
-                cv.text(x, GRID_Y - 8, name, PANEL["dim"])
+            x = sh.gx + c * PITCH
+            if x + px.text_width(name) <= sh.right:
+                cv.text(x, sh.gy - 8, name, PANEL["dim"])
         last = m
     for r, name in ((1, "M"), (3, "W"), (5, "F")):
-        cv.text(GRID_X - 6, GRID_Y + r * PITCH, name, PANEL["dim"])
+        cv.text(sh.gx - 6, sh.gy + r * PITCH, name, PANEL["dim"])
     for c, col in enumerate(cols):
         for r in range(7):
-            d = col[r]
-            if d is None:
-                continue
-            pad(cv, c, r, d["level"])
-    # legend: each swatch is the pad itself
-    lx = GRID_X
-    ly = GRID_Y + 7 * PITCH + 6
-    cv.text(lx, ly + 1, "LESS", PANEL["dim"])
-    for i in range(5):
-        pad_at(cv, lx + 18 + i * PITCH, ly, i)
-    cv.text(lx + 18 + 5 * PITCH + 2, ly + 1, "MORE", PANEL["dim"])
+            if col[r] is not None:
+                pad(cv, sh, c, r, col[r]["level"])
+    if sh.legend:  # each swatch is the pad itself
+        cv.text(sh.gx, ly + 1, "LESS", PANEL["dim"])
+        for i in range(5):
+            pad_at(cv, sh.gx + 18 + i * PITCH, ly, i)
+        cv.text(sh.gx + 18 + 5 * PITCH + 2, ly + 1, "MORE", PANEL["dim"])
     stamp = f"UPDATED {data.get('fetched', data['days'][-1]['date'])}"
-    cv.text(W - GRID_X, ly + 1, stamp, PANEL["dim"], align="right")
+    cv.text(sh.right, ly + 1, stamp, PANEL["dim"], align="right")
     return cols
 
 
@@ -239,57 +258,51 @@ def pad_at(cv, x, y, level, flash=False):
     cv.hline(x, y + PAD_SIZE - 1, PAD_SIZE, edge)
 
 
-def pad(cv, c, r, level, flash=False):
-    pad_at(cv, GRID_X + c * PITCH, GRID_Y + r * PITCH, level, flash)
+def pad(cv, sh, c, r, level, flash=False):
+    pad_at(cv, sh.gx + c * PITCH, sh.gy + r * PITCH, level, flash)
 
 
-def draw_frame(base, cols, c):
-    cv = Canvas(W, H)
+def draw_frame(base, sh, cols, c):
+    cv = Canvas(sh.w, sh.h)
     cv.img.paste(base.img)
-    if not cols:
-        return cv.img
-    x = GRID_X + c * PITCH
-    # playhead: a red LED over the column and a lifted column of pads
-    px.led(cv, x + 2, GRID_Y - 2, True, "#ff4655", "#3a1b2a", glow=None)
+    x = sh.gx + c * PITCH
+    # the playhead: a red LED over the column, and the column's pads lit up
+    px.led(cv, x + 2, sh.gy - 2, True, "#ff4655", "#3a1b2a", glow=None)
     for r in range(7):
         d = cols[c][r]
         if d is None:
             continue
         if d["level"] > 0:
-            pad(cv, c, r, d["level"], flash=True)
+            pad(cv, sh, c, r, d["level"], flash=True)
         else:
-            pad_at(cv, x, GRID_Y + r * PITCH, 0)
-            cv.hline(x, GRID_Y + r * PITCH, PAD_SIZE, "#45444e")
+            cv.hline(x, sh.gy + r * PITCH, PAD_SIZE, "#45444e")
     return cv.img
 
 
-def mark_today(cv, cols):
+def mark_today(cv, sh, cols):
     if not cols:
         return
     c = len(cols) - 1
     r = max(i for i in range(7) if cols[c][i] is not None)
-    x, y = GRID_X + c * PITCH, GRID_Y + r * PITCH
+    x, y = sh.gx + c * PITCH, sh.gy + r * PITCH
     cv.outline(x - 1, y - 1, PAD_SIZE + 2, PAD_SIZE + 2, "#ff4655")
 
 
 def render(data):
-    base = Canvas(W, H)
-    cols = draw_static(base, data)
-    mark_today(base, cols)
     os.makedirs(ASSETS, exist_ok=True)
-    still = base.img.resize((W * SCALE, H * SCALE), Image.NEAREST)
-    still.save(os.path.join(ASSETS, "sequencer.png"), optimize=True)
-    if not cols:
-        still.save(os.path.join(ASSETS, "sequencer.gif"))
-        return
-    frames = []
-    for c in range(len(cols)):
-        im = draw_frame(base, cols, c)
-        frames.append(im)
-    pal = to_palette(frames)
-    big = [p.resize((W * SCALE, H * SCALE), Image.NEAREST) for p in pal]
-    big[0].save(os.path.join(ASSETS, "sequencer.gif"), save_all=True, append_images=big[1:],
-                duration=FRAME_MS, loop=0, optimize=False, disposal=1)
+    for sh in SHEETS:
+        base = Canvas(sh.w, sh.h)
+        cols = draw_static(base, sh, data)
+        mark_today(base, sh, cols)
+        still = base.img.resize((sh.w * SCALE, sh.h * SCALE), Image.NEAREST)
+        still.save(os.path.join(ASSETS, f"{sh.name}.png"), optimize=True)
+        if not cols:
+            still.save(os.path.join(ASSETS, f"{sh.name}.gif"))
+            continue
+        frames = [draw_frame(base, sh, cols, c) for c in range(len(cols))]
+        big = [p.resize((sh.w * SCALE, sh.h * SCALE), Image.NEAREST) for p in to_palette(frames)]
+        big[0].save(os.path.join(ASSETS, f"{sh.name}.gif"), save_all=True, append_images=big[1:],
+                    duration=FRAME_MS, loop=0, optimize=False, disposal=1)
 
 
 def to_palette(frames):
