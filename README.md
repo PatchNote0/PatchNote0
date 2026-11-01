@@ -1,17 +1,15 @@
-<a href="https://patchnote.top/">
-  <picture>
-    <source media="(max-width: 600px) and (prefers-reduced-motion: reduce)" srcset="./assets/rack-compact.png">
-    <source media="(max-width: 600px)" srcset="./assets/rack-compact.gif">
-    <source media="(prefers-reduced-motion: reduce)" srcset="./assets/rack.png">
-    <img src="./assets/rack.gif" width="1680" alt="A pixel-art modular synthesizer with four modules, one for each project. Dastyar Moshaver is a step sequencer laid out as a Persian study week, the crimson PatchNote voice draws its notes on an amber oscilloscope, Budget Flow has three faders named plan, alloc and left, and Shora Archive shows 1405 on a red display. Patch cables carry the signal from left to right.">
-  </picture>
-</a>
+<picture>
+  <source media="(max-width: 600px) and (prefers-reduced-motion: reduce)" srcset="./assets/rack-compact.png">
+  <source media="(max-width: 600px)" srcset="./assets/rack-compact.gif">
+  <source media="(prefers-reduced-motion: reduce)" srcset="./assets/rack.png">
+  <img src="./assets/rack.gif" width="1680" alt="A pixel-art modular synthesizer with four modules, one for each project. Dastyar Moshaver is a step sequencer laid out as a Persian study week, the crimson PatchNote voice draws its notes on an amber oscilloscope, Budget Flow has three faders named plan, alloc and left, and Shora Archive shows 1405 on a red display. Patch cables carry the signal from left to right.">
+</picture>
 
 # Mani / PatchNote
 
 I build software, interfaces and visual systems, and I care about the details that make a product feel complete.
 
-My work moves between engineering, visual design and writing, and keeps returning to music, photography, books, mathematics, physics and space. The rest lives at [patchnote.top](https://patchnote.top/).
+My work moves between engineering, visual design and writing, and keeps returning to music, photography, books, mathematics, physics and space. The rest lives at **[patchnote.top](https://patchnote.top/)**.
 
 ## Patch notes, November 2026
 
@@ -80,6 +78,6 @@ python art/rack.py && python art/extras.py && python art/sequencer.py
 <br>
 
 <p align="center">
-  <img src="./assets/wordmark.png" width="544" alt="PatchNote">
+  <picture><img src="./assets/wordmark.png" width="544" alt="PatchNote"></picture>
 </p>
 <p align="center">Made with intention. Refined one detail at a&nbsp;time.</p>
