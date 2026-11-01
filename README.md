@@ -1,99 +1,64 @@
-<div align="center">
-  <img src="./assets/hero.gif" alt="PatchNote — an animated red editorial identity with layered parallax waves" width="100%" />
-  <br />
-  <img src="./assets/avatar.gif" alt="PatchNote P slash N animated monogram avatar" width="132" />
-  <h1>MANI <sub>/</sub> PATCH_NOTE</h1>
-  <p><em>Software, interfaces &amp; visual systems.</em></p>
-  <p>
-    <a href="https://patchnote.top/">WEBSITE</a>
-    &nbsp;·&nbsp;
-    <a href="https://github.com/PatchNote0">GITHUB</a>
-    &nbsp;·&nbsp;
-    <a href="https://patchnote.top/">SELECTED WORK</a>
-  </p>
-</div>
+<picture>
+  <source media="(max-width: 600px) and (prefers-reduced-motion: reduce)" srcset="./assets/rack-compact.png">
+  <source media="(max-width: 600px)" srcset="./assets/rack-compact.gif">
+  <source media="(prefers-reduced-motion: reduce)" srcset="./assets/rack.png">
+  <img src="./assets/rack.gif" width="1680" alt="A pixel-art modular synthesizer with four modules, one for each project. Dastyar Moshaver is a step sequencer laid out as a Persian study week, the crimson PatchNote voice draws its notes on an amber oscilloscope, Budget Flow has three faders named plan, alloc and left, and Shora Archive shows 1405 on a red display. Patch cables carry the signal from left to right.">
+</picture>
 
----
+# Mani / PatchNote
 
-## 01 / A practice between code and composition
+I build software, interfaces and visual systems, and I care about the details that make a product feel complete.
 
-I build useful software, shape interfaces, and care about the details that make a product feel complete. My work moves between engineering, visual design, writing, and the small experiments that connect them.
+My work moves between engineering, visual design and writing, and keeps returning to music, photography, books, mathematics, physics and space. The rest lives at **[patchnote.top](https://patchnote.top/)**.
 
-I am especially interested in thoughtful UI, practical desktop and web tools, custom interactions, music, photography, books, mathematics, physics, and space.
+## Patch notes, November 2026
 
-<div align="center">
-  <img src="./assets/red-tide.gif" alt="A slow, layered crimson parallax wave study" width="100%" />
-</div>
+- **Renamed.** Barnameh Negar is now Dastyar Moshaver, دستیار مشاور.
+- **New.** This profile, rebuilt as a modular synth with one module for each project.
+- **Known issue.** The public demo of Shora Archive reports that its server is unavailable.
 
-## 02 / Selected work
+## Selected work
 
-<table>
-  <tr>
-    <td width="50%" valign="top">
-      <a href="https://patchnote.top/budgetflow-pn/bf-index.html">
-        <img src="./assets/budget-flow.png" alt="Budget Flow — planning dashboard illustration" width="100%" />
-      </a>
-      <h3>Budget Flow</h3>
-      <p>A planning workspace for budgets, purchase goals, guests, checklists, product references, polls, and notes.</p>
-      <p><a href="https://patchnote.top/budgetflow-pn/bf-index.html">EXPLORE PROJECT ↗</a></p>
-    </td>
-    <td width="50%" valign="top">
-      <a href="https://patchnote.top/barnameh-negar.html">
-        <img src="./assets/barnameh-negar.png" alt="Barnameh Negar — weekly planner illustration" width="100%" />
-      </a>
-      <h3>برنامه‌نگار / Barnameh Negar</h3>
-      <p>A Windows and macOS study-planning tool. It calculates study blocks, builds weekly schedules, and exports A4 sheets or PDFs. Data stays on the user's computer.</p>
-      <p><a href="https://patchnote.top/barnameh-negar.html">EXPLORE PROJECT ↗</a></p>
-    </td>
-  </tr>
-  <tr>
-    <td width="50%" valign="top">
-      <a href="https://patchnote.top/shora/">
-        <img src="./assets/shora-archive.png" alt="Shora Archive — document register illustration" width="100%" />
-      </a>
-      <h3>Shora Archive</h3>
-      <p>A correspondence-book interface for a student council, with document indexing and search. The public demo currently reports that its server is unavailable.</p>
-      <p><a href="https://patchnote.top/shora/">VIEW DEMO ↗</a></p>
-    </td>
-    <td width="50%" valign="top">
-      <a href="https://patchnote.top/">
-        <img src="./assets/patchnote-site.png" alt="PatchNote — personal portfolio illustration" width="100%" />
-      </a>
-      <h3>PatchNote</h3>
-      <p>A personal corner for development, interface experiments, visual work, and writing.</p>
-      <p><a href="https://patchnote.top/">VISIT WEBSITE ↗</a></p>
-    </td>
-  </tr>
-</table>
+<a href="https://patchnote.top/barnameh-negar.html"><img src="./assets/plate-dastyar.png" width="342" alt="Dastyar Moshaver"></a><br>
+A study planner for Windows and macOS. It works out study blocks, builds the weekly plan and prints it as an A4 sheet or a PDF. Everything stays on your own computer.
 
-## 03 / Experience
+<a href="https://patchnote.top/budgetflow-pn/bf-index.html"><img src="./assets/plate-budget.png" width="150" alt="Budget Flow"></a><br>
+A planning workspace for budgets, purchase goals, guests, checklists, product references, polls and notes.
 
-**PineApple Craft** — Website and server development, game-server management, custom Discord bots, and plugins.
+<a href="https://patchnote.top/shora/"><img src="./assets/plate-shora.png" width="228" alt="Shora Archive"></a><br>
+The correspondence book of a student council: every letter registered, indexed and searchable.
 
-**The Dirt House Community** — Interface development and community tools, including plugins, bots, and server-management utilities.
+<a href="https://patchnote.top/"><img src="./assets/plate-patchnote.png" width="188" alt="PatchNote"></a><br>
+My own corner of the web, for development, interface experiments, visual work and writing.
 
-**Phoenix Client** — Website work for presenting services and products, alongside Discord bot development.
+## Experience
 
-<sub>These are portfolio experiences described on my website; they are not presented as public repositories owned by this GitHub account.</sub>
+**PineApple Craft.** Website and server development, game-server management, custom Discord bots and plugins.
 
-## 04 / Tools in the workshop
+**The Dirt House Community.** Interface development and community tools: plugins, bots and server-management utilities.
 
-`HTML` &nbsp; `CSS` &nbsp; `JavaScript` &nbsp; `Python` &nbsp; `C++` &nbsp; `C#` &nbsp; `Node.js` &nbsp; `Discord.js` &nbsp; `Git` &nbsp; `Figma`
+**Phoenix Client.** A website presenting its services and products, and Discord bot development.
 
-<sub>A practical list of tools and languages I have worked with or explored — not a proficiency ranking.</sub>
+This is client and community work, so none of it lives in public repositories on this account.
 
-## 05 / Motion, made with code
+## Tools
 
-The moving artwork in this profile is generated frame by frame with Python and Pillow. The hero uses separate visual layers moving at different rates to create a parallax impression; the monogram and wave study are procedural animations, not third-party embeds.
+HTML, CSS, JavaScript, Node.js, Python, C++, C#, Discord.js, Git and Figma.
 
-<div align="center">
-  <img src="./assets/red-tide.gif" alt="Layered crimson wave animation" width="100%" />
-  <p><sub>FIELD STUDY  /  DEPTH, RHYTHM, REPETITION</sub></p>
-</div>
+## This year, as a sequence
 
----
+<picture>
+  <source media="(max-width: 600px) and (prefers-reduced-motion: reduce)" srcset="https://raw.githubusercontent.com/PatchNote0/PatchNote0/output/sequencer-compact.png">
+  <source media="(max-width: 600px)" srcset="https://raw.githubusercontent.com/PatchNote0/PatchNote0/output/sequencer-compact.gif">
+  <source media="(prefers-reduced-motion: reduce)" srcset="https://raw.githubusercontent.com/PatchNote0/PatchNote0/output/sequencer.png">
+  <img src="https://raw.githubusercontent.com/PatchNote0/PatchNote0/output/sequencer.gif" width="1680" alt="My public GitHub contributions drawn as the pads of a step sequencer: one pad per day, weeks in columns, brighter amber on busier days, with a playhead walking through the weeks.">
+</picture>
 
-<div align="center">
-  <p><em>Made with intention. Refined one detail at a time.</em></p>
-  <a href="https://patchnote.top/">PATCHNOTE.TOP</a>
-</div>
+Each pad is one day of my public GitHub contributions, brighter on busier days. It redraws itself every day.
+
+<br>
+
+<p align="center">
+  <picture><img src="./assets/wordmark.png" width="544" alt="PatchNote"></picture>
+</p>
+<p align="center">Made with intention. Refined one detail at a&nbsp;time.</p>

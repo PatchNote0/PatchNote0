@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+.taste-skill/
+# the daily drawing is published to the output branch
+assets/sequencer*
