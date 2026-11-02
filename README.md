@@ -67,6 +67,17 @@ This is client and community work, so none of it lives in public repositories on
 
 Each pad is one day of my public GitHub contributions, brighter on busier days. It redraws itself every day.
 
+## Drawn in contribution squares
+
+<p align="center">
+  <picture>
+    <source media="(prefers-reduced-motion: reduce)" srcset="./assets/contribution-squares.png">
+    <img src="./assets/contribution-squares.svg" width="480" alt="Pixel art drawn in GitHub contribution squares inside a green border: a pale arm reaches down from the top left toward a glowing orange jar held in two hands, and a small black cat with orange eyes sits beside it. The squares pop into place one after another.">
+  </picture>
+</p>
+
+The same squares as the graph above, used as a canvas. Every square pops into place on its own beat.
+
 <br>
 
 <p align="center">
